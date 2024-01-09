@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using proiect_MDP.Data;
 using proiect_MDP.Models;
 
+
 namespace proiect_MDP.Pages.Zboruri
 {
     public class IndexModel : PageModel
@@ -19,13 +20,19 @@ namespace proiect_MDP.Pages.Zboruri
         {
             _context = context;
         }
-        public IList<Zbor> Zbor { get;set; } = default!;
+        public IList<Zbor> Zbor { get; set; } = default!;
         public ZborData ZborD { get; set; }
         public int ZborID { get; set; }
         public int CategorieID { get; set; }
-        public async Task OnGetAsync(int? id, int? categorieID)
+
+        public string CurrentFilter { get; set; }
+
+        public async Task OnGetAsync(int? id, int? categorieID, string searchString)
         {
             ZborD = new ZborData();
+
+
+            CurrentFilter = searchString;
 
             ZborD.Zboruri = await _context.Zbor
             .Include(b => b.Terminal)
@@ -34,12 +41,21 @@ namespace proiect_MDP.Pages.Zboruri
             .AsNoTracking()
             .OrderBy(b => b.Destinatie)
             .ToListAsync();
-            if (id != null)
+
+            if (!String.IsNullOrEmpty(searchString))
             {
-                ZborID = id.Value;
-                Zbor zbor = ZborD.Zboruri
-                .Where(i => i.ID == id.Value).Single();
-                ZborD.Categorii = zbor.ZborCategorii.Select(s => s.Categorie);
+                ZborD.Zboruri = ZborD.Zboruri.Where(s => s.Companie.FirstName.Contains(searchString)
+
+               || s.Companie.LastName.Contains(searchString)
+               || s.Destinatie.Contains(searchString));
+
+                if (id != null)
+                {
+                    ZborID = id.Value;
+                    Zbor zbor = ZborD.Zboruri
+                    .Where(i => i.ID == id.Value).Single();
+                    ZborD.Categorii = zbor.ZborCategorii.Select(s => s.Categorie);
+                }
             }
         }
     }
