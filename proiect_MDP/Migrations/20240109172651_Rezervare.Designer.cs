@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using proiect_MDP.Data;
 
@@ -11,9 +12,10 @@ using proiect_MDP.Data;
 namespace proiect_MDP.Migrations
 {
     [DbContext(typeof(proiect_MDPContext))]
-    partial class proiect_MDPContextModelSnapshot : ModelSnapshot
+    [Migration("20240109172651_Rezervare")]
+    partial class Rezervare
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

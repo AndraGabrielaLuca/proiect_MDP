@@ -21,5 +21,11 @@ namespace proiect_MDP.Data
         public DbSet<proiect_MDP.Models.Companie>? Companie { get; set; }
 
         public DbSet<proiect_MDP.Models.Categorie>? Categorie { get; set; }
+
+        public DbSet<proiect_MDP.Models.Utilizator>? Utilizator { get; set; }
+
+        public DbSet<proiect_MDP.Models.Bilet>? Bilet { get; set; }
+
+        public DbSet<proiect_MDP.Models.Rezervare>? Rezervare { get; set; }
     }
 }

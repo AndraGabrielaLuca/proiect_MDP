@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using proiect_MDP.Data;
 
@@ -11,9 +12,10 @@ using proiect_MDP.Data;
 namespace proiect_MDP.Migrations
 {
     [DbContext(typeof(proiect_MDPContext))]
-    partial class proiect_MDPContextModelSnapshot : ModelSnapshot
+    [Migration("20240109171100_Bilet")]
+    partial class Bilet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,32 +23,6 @@ namespace proiect_MDP.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("proiect_MDP.Models.Bilet", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<DateTime>("PlecareDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("UtilizatorID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ZborID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("UtilizatorID");
-
-                    b.HasIndex("ZborID");
-
-                    b.ToTable("Bilet");
-                });
 
             modelBuilder.Entity("proiect_MDP.Models.Categorie", b =>
                 {
@@ -101,35 +77,6 @@ namespace proiect_MDP.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Terminal");
-                });
-
-            modelBuilder.Entity("proiect_MDP.Models.Utilizator", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<string>("Adress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Utilizator");
                 });
 
             modelBuilder.Entity("proiect_MDP.Models.Zbor", b =>
@@ -188,21 +135,6 @@ namespace proiect_MDP.Migrations
                     b.ToTable("ZborCategorie");
                 });
 
-            modelBuilder.Entity("proiect_MDP.Models.Bilet", b =>
-                {
-                    b.HasOne("proiect_MDP.Models.Utilizator", "Utilizator")
-                        .WithMany("Bilete")
-                        .HasForeignKey("UtilizatorID");
-
-                    b.HasOne("proiect_MDP.Models.Zbor", "Zbor")
-                        .WithMany()
-                        .HasForeignKey("ZborID");
-
-                    b.Navigation("Utilizator");
-
-                    b.Navigation("Zbor");
-                });
-
             modelBuilder.Entity("proiect_MDP.Models.Zbor", b =>
                 {
                     b.HasOne("proiect_MDP.Models.Companie", "Companie")
@@ -250,11 +182,6 @@ namespace proiect_MDP.Migrations
             modelBuilder.Entity("proiect_MDP.Models.Terminal", b =>
                 {
                     b.Navigation("Zboruri");
-                });
-
-            modelBuilder.Entity("proiect_MDP.Models.Utilizator", b =>
-                {
-                    b.Navigation("Bilete");
                 });
 
             modelBuilder.Entity("proiect_MDP.Models.Zbor", b =>

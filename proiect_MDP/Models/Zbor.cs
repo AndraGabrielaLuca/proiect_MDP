@@ -22,6 +22,7 @@ namespace proiect_MDP.Models
         public int? TerminalID { get; set; }
         public Terminal? Terminal { get; set; }
 
-        public ICollection<ZborCategorie>? ZborCategorii { get; set; } 
+
+        public ICollection<ZborCategorie>? ZborCategorii { get; set; }
     }
 }
