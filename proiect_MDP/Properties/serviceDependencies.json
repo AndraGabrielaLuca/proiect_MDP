@@ -3,6 +3,10 @@
     "mssql1": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:proiect_MDPContext"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:LibraryIdentityContextConnection"
     }
   }
 }
