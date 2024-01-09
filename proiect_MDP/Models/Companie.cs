@@ -18,6 +18,6 @@ namespace proiect_MDP.Models
                 return FirstName + " " + LastName;
             }
         }
-        public ICollection<Zbor>? Zboruri { get; set; } 
+        public ICollection<Zbor>? Zboruri { get; set; }
     }
 }

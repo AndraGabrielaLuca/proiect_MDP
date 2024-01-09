@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using proiect_MDP.Data;
 using proiect_MDP.Models;
+using proiect_MDP.Models.ViewModels;
 
 namespace proiect_MDP.Pages.Companii
 {
@@ -20,12 +22,23 @@ namespace proiect_MDP.Pages.Companii
         }
 
         public IList<Companie> Companie { get;set; } = default!;
-
-        public async Task OnGetAsync()
+        public CompanieIndexData CompanieData { get; set; }
+        public int CompanieID { get; set; }
+        public int ZborID { get; set; }
+        public async Task OnGetAsync(int? id, int? ZborID)
         {
-            if (_context.Companie != null)
+            CompanieData = new CompanieIndexData();
+            CompanieData.Companii = await _context.Companie
+            .Include(i => i.Zboruri)
+            .ThenInclude(c => c.Terminal)
+            .OrderBy(i => i.FirstName)
+            .ToListAsync();
+            if (id != null)
             {
-                Companie = await _context.Companie.ToListAsync();
+                CompanieID = id.Value;
+                Companie companie = CompanieData.Companii
+                .Where(i => i.ID == id.Value).Single();
+                CompanieData.Zboruri = companie.Zboruri;
             }
         }
     }
