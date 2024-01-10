@@ -47,3 +47,32 @@
 }
     </tbody>
 </table>
+@if (Model.CompanieData.Zboruri != null)
+{
+    <h3>Zboruri care decoleaza cu compania:</h3>
+    <table class="table">
+
+        @foreach (var item in Model.CompanieData.Companii)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.CompanieID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+
+                <td>
+                    @{
+                        foreach (var b in item.Zboruri)
+                        {
+
+                            @b.Destinatie
+
+                            <br />
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}
