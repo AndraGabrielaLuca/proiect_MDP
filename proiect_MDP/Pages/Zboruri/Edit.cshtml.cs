@@ -11,10 +11,10 @@ using Microsoft.EntityFrameworkCore;
 using proiect_MDP.Data;
 using proiect_MDP.Models;
 
-namespace proiect_MDP.Pages.Zboruri
+namespace proiect_MDP.Pages.Zboruri 
 {
     [Authorize(Roles = "Admin")]
-    public class EditModel : PageModel
+    public class EditModel : ZborCategoriiPageModel
     {
         private readonly proiect_MDP.Data.proiect_MDPContext _context;
 
@@ -33,6 +33,14 @@ namespace proiect_MDP.Pages.Zboruri
                 return NotFound();
             }
 
+            Zbor = await _context.Zbor
+             .Include(b => b.Terminal)
+             .Include(b => b.ZborCategorii).ThenInclude(b => b.Categorie)
+             .AsNoTracking()
+             .FirstOrDefaultAsync(m => m.ID == id);
+
+            PopulateAssignedCategoryData(_context, Zbor);
+
             var zbor =  await _context.Zbor.FirstOrDefaultAsync(m => m.ID == id);
             if (zbor == null)
             {
@@ -44,36 +52,43 @@ namespace proiect_MDP.Pages.Zboruri
             return Page();
         }
 
-        
-        public async Task<IActionResult> OnPostAsync()
+
+        public async Task<IActionResult> OnPostAsync(int? id, string[]selectedCategories)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
             }
-
-            _context.Attach(Zbor).State = EntityState.Modified;
-
-            try
+            //se va include Author conform cu sarcina de la lab 2
+            var bookToUpdate = await _context.Zbor
+            .Include(i => i.Terminal)
+            .Include(i => i.ZborCategorii)
+            .ThenInclude(i => i.Categorie)
+            .FirstOrDefaultAsync(s => s.ID == id);
+            if (bookToUpdate == null)
             {
+                return NotFound();
+            }
+            //se va modifica AuthorID conform cu sarcina de la lab 2
+            if (await TryUpdateModelAsync<Zbor>(
+            bookToUpdate,
+            "Zbor",
+            i => i.Destinatie, 
+            i => i.Pret, i => i.ZborDate, i => i.TerminalID))
+            {
+                UpdateBookCategories(_context, selectedCategories, bookToUpdate);
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ZborExists(Zbor.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
+            //Apelam UpdateBookCategories pentru a aplica informatiile din checkboxuri la entitatea Books care 
+            //este editata 
+            UpdateBookCategories(_context, selectedCategories, bookToUpdate);
+            PopulateAssignedCategoryData(_context, bookToUpdate);
+            return Page();
         }
 
-        private bool ZborExists(int id)
+
+    private bool ZborExists(int id)
         {
           return (_context.Zbor?.Any(e => e.ID == id)).GetValueOrDefault();
         }

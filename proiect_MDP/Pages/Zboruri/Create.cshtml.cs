@@ -10,10 +10,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using proiect_MDP.Data;
 using proiect_MDP.Models;
 
+
 namespace proiect_MDP.Pages.Zboruri
 {
     [Authorize(Roles = "Admin")]
-    public class CreateModel : PageModel
+    public class CreateModel : ZborCategoriiPageModel
     {
         private readonly proiect_MDP.Data.proiect_MDPContext _context;
 
@@ -25,24 +26,37 @@ namespace proiect_MDP.Pages.Zboruri
         public IActionResult OnGet()
         {
             ViewData["TerminalID"] = new SelectList(_context.Set<Terminal>(), "ID", "TerminalName");
+
+            var zbor = new Zbor();
+            zbor.ZborCategorii = new List<ZborCategorie>();
+            PopulateAssignedCategoryData(_context, zbor);
+
             return Page();
         }
 
         [BindProperty]
         public Zbor Zbor { get; set; } = default!;
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string[] selectedCategories)
         {
-          if (!ModelState.IsValid || _context.Zbor == null || Zbor == null)
+            var newZbor = new Zbor();
+            if (selectedCategories != null)
             {
-                return Page();
+                newZbor.ZborCategorii = new List<ZborCategorie>();
+                foreach (var cat in selectedCategories)
+                {
+                    var catToAdd = new ZborCategorie
+                    {
+                        CategorieID = int.Parse(cat)
+                    };
+                    newZbor.ZborCategorii.Add(catToAdd);
+                }
             }
-
+            Zbor.ZborCategorii = newZbor.ZborCategorii;
             _context.Zbor.Add(Zbor);
             await _context.SaveChangesAsync();
-
             return RedirectToPage("./Index");
         }
     }

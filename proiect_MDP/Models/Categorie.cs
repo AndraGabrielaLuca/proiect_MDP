@@ -9,5 +9,6 @@ namespace proiect_MDP.Models
         [Display(Name = "Clasa zbor")]
         public string CategorieName { get; set; }
         public ICollection<ZborCategorie>? ZborCategorii { get; set; }
+        
     }
 }

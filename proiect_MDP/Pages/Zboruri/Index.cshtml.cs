@@ -21,6 +21,11 @@ namespace proiect_MDP.Pages.Zboruri
             _context = context;
         }
         public IList<Zbor> Zbor { get; set; } = default!;
+
+
+
+
+
         public ZborData ZborD { get; set; }
         public int ZborID { get; set; }
         public int CategorieID { get; set; }

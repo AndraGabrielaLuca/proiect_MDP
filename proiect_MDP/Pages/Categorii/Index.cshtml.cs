@@ -21,6 +21,8 @@ namespace proiect_MDP.Pages.Categorii
 
         public IList<Categorie> Categorie { get;set; } = default!;
 
+
+
         public async Task OnGetAsync()
         {
             if (_context.Categorie != null)
