@@ -41,6 +41,7 @@ namespace proiect_MDP.Pages.Zboruri
 
             ZborD.Zboruri = await _context.Zbor
             .Include(b => b.Terminal)
+            .Include(b => b.Companie)
             .Include(b => b.ZborCategorii)
             .ThenInclude(b => b.Categorie)
             .AsNoTracking()
@@ -49,10 +50,7 @@ namespace proiect_MDP.Pages.Zboruri
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                ZborD.Zboruri = ZborD.Zboruri.Where(s => s.Companie.FirstName.Contains(searchString)
-
-               || s.Companie.LastName.Contains(searchString)
-               || s.Destinatie.Contains(searchString));
+                ZborD.Zboruri = ZborD.Zboruri.Where(s => s.Destinatie.Contains(searchString));
 
                 if (id != null)
                 {

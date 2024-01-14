@@ -26,7 +26,7 @@ namespace proiect_MDP.Pages.Zboruri
         public IActionResult OnGet()
         {
             ViewData["TerminalID"] = new SelectList(_context.Set<Terminal>(), "ID", "TerminalName");
-
+            ViewData["CompanieID"] = new SelectList(_context.Set<Companie>(), "ID", "FullName");
             var zbor = new Zbor();
             zbor.ZborCategorii = new List<ZborCategorie>();
             PopulateAssignedCategoryData(_context, zbor);

@@ -7,6 +7,7 @@ namespace proiect_MDP.Models
     public class Zbor
     {
         public int ID { get; set; }
+
         public string Destinatie { get; set; }
 
         [Column(TypeName = "decimal(6, 2)")]

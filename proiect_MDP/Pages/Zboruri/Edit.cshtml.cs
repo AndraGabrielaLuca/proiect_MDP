@@ -48,7 +48,7 @@ namespace proiect_MDP.Pages.Zboruri
             }
             Zbor = zbor;
             ViewData["TerminalID"] = new SelectList(_context.Set<Terminal>(), "ID", "TerminalName");
-
+            ViewData["CompanieID"] = new SelectList(_context.Set<Companie>(), "ID", "FullName");
             return Page();
         }
 

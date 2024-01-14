@@ -40,6 +40,9 @@
                 @Html.DisplayNameFor(model => model.Zbor[0].Terminal)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Zbor[0].Companie.FullName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Zbor[0].ZborCategorii)
             </th>
         </tr>
@@ -68,6 +71,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Terminal.TerminalName)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Companie.FullName)
+                </td>
             <td>
                 @{
                    foreach (var category in item.ZborCategorii)
