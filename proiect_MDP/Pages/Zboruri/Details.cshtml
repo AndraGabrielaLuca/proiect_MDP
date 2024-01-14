@@ -18,10 +18,10 @@
             @Html.DisplayFor(model => model.Zbor.Destinatie)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Zbor.Companie)
+            @Html.DisplayNameFor(model => model.Zbor.Companie.FullName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Zbor.Companie)
+            @Html.DisplayFor(model => model.Zbor.Companie.FullName)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Zbor.Pret)
@@ -34,6 +34,12 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Zbor.ZborDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Zbor.Terminal.TerminalName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Zbor.Terminal.TerminalName)
         </dd>
     </dl>
 </div>

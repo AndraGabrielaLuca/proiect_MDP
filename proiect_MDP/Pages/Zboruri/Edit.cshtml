@@ -20,9 +20,10 @@
                 <span asp-validation-for="Zbor.Destinatie" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Zbor.Companie" class="control-label"></label>
-                <input asp-for="Zbor.Companie" class="form-control" />
-                <span asp-validation-for="Zbor.Companie" class="text-danger"></span>
+                <label asp-for="Zbor.CompanieID" class="control-label">Companie aeriana</label>
+                <select asp-for="Zbor.CompanieID" class="form-control" asp-items="ViewBag.CompanieID"> 
+                </select>
+                <span asp-validation-for="Zbor.CompanieID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Zbor.Pret" class="control-label"></label>
@@ -39,12 +40,7 @@
                 <select asp-for="Zbor.TerminalID" class="form-control" asp-items="ViewBag.TerminalID"> </select>
                 <span asp-validation-for="Zbor.TerminalID" class="text-danger"></span>
             </div>
-             <div class="form-group">
-                <label asp-for="Zbor.CompanieID" class="control-label">Companie aeriana</label>
-                <select asp-for="Zbor.CompanieID" class="form-control" asp-items="ViewBag.CompanieID"> 
-                </select>
-                <span asp-validation-for="Zbor.CompanieID" class="text-danger"></span>
-            </div>
+             
             <div class="form-group">
                 <div class="table">
                     <table>
