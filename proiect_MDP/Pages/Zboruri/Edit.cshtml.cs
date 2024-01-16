@@ -73,7 +73,7 @@ namespace proiect_MDP.Pages.Zboruri
             if (await TryUpdateModelAsync<Zbor>(
             bookToUpdate,
             "Zbor",
-            i => i.Destinatie, 
+            i => i.Destinatie, i => i.CompanieID,
             i => i.Pret, i => i.ZborDate, i => i.TerminalID))
             {
                 UpdateBookCategories(_context, selectedCategories, bookToUpdate);
